@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>VehicleById</title>
+  <link th:href="@{/styles/vehicleById-style.css}" rel="stylesheet" />
+</head>
+<body>
+
+<h2>Vehicle by ID</h2>
+<div th:if="${vehicle}">
+  <p>Id <span th:text="${vehicle.getId()}"></span></p>
+  <p>Mark <span th:text="${vehicle.getMark()}"></span></p>
+  <p>Model <span th:text="${vehicle.getModel()}"></span></p>
+  <p>Color <span th:text="${vehicle.getColor()}"></span></p>
+</div>
+<div th:if="${VehicleNotFound}">
+  <p th:text="${VehicleNotFound}"></p>
+</div>
+
+<a th:href="@{/vehicle}">back to vehicles</a>
+
+
+</body>
+</html>

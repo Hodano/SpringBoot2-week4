@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vehicles</title>
+    <link th:href="@{/styles/vehicle-style.css}" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+    <div>
+        <h2 th:if="${vehicles}" th:text="Vehicles"></h2>
+        <ul th:each="vehicle: ${vehicles}">
+            <li th:text="${vehicle.getId()}"></li>
+            <li th:text="${vehicle.getMark()}"></li>
+            <li th:text="${vehicle.getModel()}"></li>
+            <li th:text="${vehicle.getColor()}"></li>
+        </ul>
+    </div>
+    <div class="form-elements">
+        <div>
+            <div>
+                <h2>Add Vehicle</h2>
+                <form th:action="@{/add-vehicle}" th:object="${newVehicle}" method="post">
+                    <p>Id <input type=number th:field="*{id}"></p>
+                    <p>Mark <input type="text" th:field="*{mark}"></p>
+                    <p>Model <input type="text" th:field="*{model}"></p>
+                    <p>Color <input type="text" th:field="*{color}"></p>
+
+                    <p> <input class="button" type="submit" value="add vehicle"></p>
+                </form>
+                <p th:if="NotAdded" th:text="${NotAdded}"></p>
+            </div>
+
+            <div>
+                <h2>Modify Vehicle</h2>
+                <form th:action="@{/modify-vehicle}" th:object="${newVehicle}" method="post">
+                    <input type="hidden" name="_method" value="put" />
+                    <p>Id <input type=number th:field="*{id}"></p>
+                    <p>Mark <input type="text" th:field="*{mark}"></p>
+                    <p>Model <input type="text" th:field="*{model}"></p>
+                    <p>Color <input type="text" th:field="*{color}"></p>
+
+                    <p> <input class="button" type="submit" value="modify vehicle"></p>
+                </form>
+                <p th:if="NotAdded" th:text="${NotModify}"></p>
+            </div>
+        </div>
+
+        <div>
+            <div>
+                <h2>Modify Color</h2>
+                <form th:action="@{/modify-color}" method="post">
+                    <input type="hidden" name="_method" value="patch" />
+                    <p>Id <input type=number name="id"></p>
+                    <p>color <input type=text name="color"></p>
+
+                    <p><input class="button" type="submit" value="modify color"></p>
+                </form>
+                <p th:if="NotAdded" th:text="${NotModifyColor}"></p>
+            </div>
+
+            <div>
+                <h2>Delete Vehicle</h2>
+                <form th:action="@{/delete-vehicle}"  method="post">
+                    <input type="hidden" name="_method" value="delete" />
+                    <p>Id: <input type="number" name="id"></p>
+                    <p><input class="button" type="submit" value="delete vehicle"></p>
+                </form>
+                <p th:if="NotAdded" th:text="${NotDelete}"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
