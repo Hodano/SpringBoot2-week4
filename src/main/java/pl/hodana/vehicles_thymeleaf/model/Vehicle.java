@@ -64,8 +64,10 @@ public class Vehicle {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Vehicle vehicle = (Vehicle) o;
         return id == vehicle.id && Objects.equals(mark, vehicle.mark) && Objects.equals(model, vehicle.model) && Objects.equals(color, vehicle.color);
     }

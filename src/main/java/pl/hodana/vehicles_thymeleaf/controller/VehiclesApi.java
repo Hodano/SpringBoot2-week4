@@ -30,46 +30,39 @@ public class VehiclesApi {
     @GetMapping("/vehicle/{id}")
     public String getVehiclesById(@PathVariable long id, Model model) {
         Optional<Vehicle> searchedVehicle = vehiclesService.getVehiclesById(id);
-        if (searchedVehicle.isPresent()) {
-            model.addAttribute("vehicle", searchedVehicle.get());
-            return "vehicleById";
-        } else
+        if (!searchedVehicle.isPresent())
             model.addAttribute("VehicleNotFound", "Vehicle with this id is not exist");
 
+        model.addAttribute("vehicle", searchedVehicle.get());
         return "vehicleById";
     }
 
     @PostMapping("/add-vehicle")
     public String addVehicle(@Validated @ModelAttribute Vehicle vehicle, RedirectAttributes redirectAttributes) {
-        if (vehiclesService.addVehicle(vehicle))
-            return "redirect:/vehicle";
-
-        redirectAttributes.addFlashAttribute("NotAdded", "Vehicle add failed");
+        if (!vehiclesService.addVehicle(vehicle))
+            redirectAttributes.addFlashAttribute("NotAdded", "Vehicle add failed");
         return "redirect:/vehicle";
 
     }
 
     @PutMapping("modify-vehicle")
     public String modificationVehicle(@Validated @ModelAttribute Vehicle vehicle, RedirectAttributes redirectAttributes) {
-        if (vehiclesService.modificationVehicle(vehicle))
-            return "redirect:/vehicle";
-        redirectAttributes.addFlashAttribute("NotModify", "Vehicle modify failed");
+        if (!vehiclesService.modificationVehicle(vehicle))
+            redirectAttributes.addFlashAttribute("NotModify", "Vehicle modify failed");
         return "redirect:/vehicle";
     }
 
     @PatchMapping("/modify-color")
     public String modificationColorById(long id, @RequestParam @NotNull String color, RedirectAttributes redirectAttributes) {
-        if (vehiclesService.modificationColor(id, color))
-            return "redirect:/vehicle";
-        redirectAttributes.addFlashAttribute("NotModifyColor", "Color modify failed");
+        if (!vehiclesService.modificationColor(id, color))
+            redirectAttributes.addFlashAttribute("NotModifyColor", "Color modify failed");
         return "redirect:/vehicle";
     }
 
     @DeleteMapping("delete-vehicle")
     public String removeVehicle(long id, RedirectAttributes redirectAttributes) {
-        if (vehiclesService.removeVehicle(id))
-            return "redirect:/vehicle";
-        redirectAttributes.addFlashAttribute("NotDelete", "Vehicle with this id is not exist");
+        if (!vehiclesService.removeVehicle(id))
+            redirectAttributes.addFlashAttribute("NotDelete", "Vehicle with this id is not exist");
         return "redirect:/vehicle";
     }
 
